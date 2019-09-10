@@ -30,6 +30,6 @@ const {
 //   });
 // });
 
-getPrices('PL', "70010000010236").then(data => {
-  console.info(data);
+getPrices("PL", ["70010000015597", "70010000020271"]).then(data => {
+  console.info(data.prices);
 });
