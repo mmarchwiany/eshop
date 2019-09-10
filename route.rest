@@ -1,0 +1,5 @@
+GET http://localhost:3000/games
+###
+POST http://localhost:3000/games/import-games
+###
+POST http://localhost:3000/games/import-prices

@@ -1,35 +1,66 @@
-const fs = require("fs");
-const {
-  getGamesAmerica,
-  getGamesEurope,
-  getGamesJapan,
-  getPrices
-} = require("nintendo-switch-eshop");
+const express = require("express");
+const app = express();
+const port = 3000;
 
-// getGamesEurope().then(data => {
-//   fs.writeFile("./storage/data/europe.json", JSON.stringify(data), err => {
-//     if (err) {
-//       console.error(`Cannot save file ./storage/data/europe.json`);
-//     }
-//   });
-// });
+var url = "mongodb://localhost:27017/eshop";
+var db = require("mongodb").MongoClient;
 
-// getGamesAmerica().then(data => {
-//   fs.writeFile("./storage/data/america.json", JSON.stringify(data), err => {
-//     if (err) {
-//       console.error(`Cannot save file ./storage/data/america.json`);
-//     }
-//   });
-// });
+app.get("/importGamesList", (req, res) => {
+  const {
+    getGamesAmerica,
+    getGamesEurope,
+    getGamesJapan,
+    getPrices
+  } = require("nintendo-switch-eshop");
 
-// getGamesJapan().then(data => {
-//   fs.writeFile("./storage/data/japan.json", JSON.stringify(data), err => {
-//     if (err) {
-//       console.error(`Cannot save file ./storage/data/japan.json`);
-//     }
-//   });
-// });
+  db.connect(url, function(err, db) {
+    if (err) throw err;
 
-getPrices("PL", ["70010000015597", "70010000020271"]).then(data => {
-  console.info(data.prices);
+    db.collection("games").insertOne(
+      {
+        id: 1,
+        title: "title",
+        image: "image",
+        category: ["1", "2"],
+        is_discounted: false,
+        discount: 0
+      },
+      function(err, res) {
+        if (err) throw err;
+        console.log("Document inserted");
+        db.close();
+      }
+    );
+
+    db.close();
+  });
+
+  //   getGamesEurope().then(data => {
+  //     for (let {
+  //       nsuid_txt: id,
+  //       title: title,
+  //       image_url: image,
+  //       game_categories_txt: category,
+  //       price_has_discount_b: is_discounted,
+  //       price_discount_percentage_f: discount
+  //     } of data) {
+  //       db.collection("games").insertOne(
+  //         {
+  //           id,
+  //           title,
+  //           image,
+  //           category,
+  //           is_discounted,
+  //           discount
+  //         },
+  //         function(err, res) {
+  //           if (err) throw err;
+  //           console.log("Document inserted");
+  //           db.close();
+  //         }
+  //       );
+  //     }
+  //   });
 });
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
