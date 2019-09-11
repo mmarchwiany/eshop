@@ -11,7 +11,7 @@ const {
 
 router.get("/", async (req, res) => {
   try {
-    const games = await Game.find();
+    const games = await Game.find().limit(10);
 
     res.json(games);
   } catch (err) {
@@ -73,13 +73,13 @@ updatePrices = (gamesChunk, res) => {
   getPrices("PL", gamesChunk.map(o => o["id"]))
     .then(data => {
       data.prices.forEach(price => {
-        Game.findOne({ id: price.title_id.toString() }, function(error, game) {
+        Game.findOne({ id: price.title_id }, function(error, game) {
+          console.info(transformPriceData(price));
           game.prices.push(transformPriceData(price));
           game.save();
         });
       });
     })
-
     .catch(err => console.error(err));
 };
 
