@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/import-games", async (req, res) => {
+router.post("/import", async (req, res) => {
   getGamesEurope()
     .then(async data => {
       for (let {
@@ -57,51 +57,5 @@ router.post("/import-games", async (req, res) => {
       res.status(500).json({ error: err.message });
     });
 });
-
-router.post("/import-prices", (req, res) => {
-  Game.find().exec((err, games) => {
-    for (i = 0, j = games.length; i < j; i += 40) {
-      gamesChunk = games.slice(i, i + 40);
-      updatePrices(gamesChunk, res);
-    }
-
-    res.status(200).json({ save: "OK" });
-  });
-});
-
-updatePrices = (gamesChunk, res) => {
-  getPrices("PL", gamesChunk.map(o => o["id"]))
-    .then(data => {
-      data.prices.forEach(price => {
-        Game.findOne({ id: price.title_id }, function(error, game) {
-          console.info(transformPriceData(price));
-          game.prices.push(transformPriceData(price));
-          game.save();
-        });
-      });
-    })
-    .catch(err => console.error(err));
-};
-
-transformPriceData = price => {
-  return {
-    date: new Date().toLocaleDateString(),
-    price:
-      price.regular_price !== undefined ? price.regular_price.raw_value : "",
-    currency:
-      price.regular_price !== undefined ? price.regular_price.currency : "",
-    country: "PL",
-    discount_price:
-      price.discount_price !== undefined ? price.discount_price.raw_value : "",
-    discount_start_date:
-      price.discount_price !== undefined
-        ? price.discount_price.start_datetime
-        : "",
-    discount_end_date:
-      price.discount_price !== undefined
-        ? price.discount_price.end_datetime
-        : ""
-  };
-};
 
 module.exports = router;

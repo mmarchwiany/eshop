@@ -26,6 +26,7 @@ const gameSchema = new mongoose.Schema({
   discount: Number,
   prices: [
     {
+      game_id: String,
       date: String,
       price: String,
       currency: String,

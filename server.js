@@ -15,7 +15,9 @@ db.on("open", () => console.log("Connected to database"));
 app.use(express.json());
 
 const gamesRouter = require("./routes/games");
+const pricesRouter = require("./routes/prices");
 app.use("/games", gamesRouter);
+app.use("/prices", pricesRouter);
 
 app.listen(3000, () => {
   console.log("Server started");
