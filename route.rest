@@ -1,5 +1,9 @@
 GET http://localhost:3000/games
 ###
+GET http://localhost:3000/games?filters[title]=Zelda
+###
+GET http://localhost:3000/games?filters[title]=Super Mario Odyssey
+###
 GET http://localhost:3000/games/70010000003781
 ###
 GET http://localhost:3000/games/70010000003781/prices

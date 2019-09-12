@@ -16,16 +16,14 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/import", async (req, res) => {
-  Game.find()
-    .limit(1)
-    .exec((err, games) => {
-      for (i = 0, j = games.length; i < j; i += 50) {
-        gamesChunk = games.slice(i, i + 50);
-        ["PL", "DE"].forEach(country => updatePrices(gamesChunk, country, res));
-      }
+  Game.find().exec((err, games) => {
+    for (i = 0, j = games.length; i < j; i += 50) {
+      gamesChunk = games.slice(i, i + 50);
+      ["PL", "DE"].forEach(country => updatePrices(gamesChunk, country, res));
+    }
 
-      res.status(200).json({ save: "OK" });
-    });
+    res.status(200).json({ save: "OK" });
+  });
 });
 
 function updatePrices(gamesChunk, country, res) {

@@ -12,7 +12,14 @@ const {
 
 router.get("/", async (req, res) => {
   try {
-    const games = await Game.find().limit(10);
+    let filters = {};
+
+    if (req.query.filters) {
+      for (const key of Object.keys(req.query.filters)) {
+        filters[key] = new RegExp(req.query.filters[key], "i");
+      }
+    }
+    const games = await Game.find(filters).limit(10);
 
     res.json(games);
   } catch (err) {
