@@ -5,41 +5,76 @@ const Game = require("../models/game");
 
 const { getPrices } = require("nintendo-switch-eshop");
 
-router.post("/import", (req, res) => {
-  Game.find().exec((err, games) => {
-    for (i = 0, j = games.length; i < j; i += 50) {
-      gamesChunk = games.slice(i, i + 50);
-      ["PL", "DE", "UK"].forEach(country =>
-        updatePrices(gamesChunk, country, res)
-      );
-    }
+router.get("/", async (req, res) => {
+  try {
+    const prices = await Price.find();
 
-    res.status(200).json({ save: "OK" });
-  });
+    res.json(prices);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
-updatePrices = (gamesChunk, country, res) => {
+router.post("/import", async (req, res) => {
+  Game.find()
+    .limit(1)
+    .exec((err, games) => {
+      for (i = 0, j = games.length; i < j; i += 50) {
+        gamesChunk = games.slice(i, i + 50);
+        ["PL", "DE"].forEach(country => updatePrices(gamesChunk, country, res));
+      }
+
+      res.status(200).json({ save: "OK" });
+    });
+});
+
+function updatePrices(gamesChunk, country, res) {
   getPrices(country, gamesChunk.map(o => o["id"]))
     .then(data => {
       data.prices.forEach(price => {
-        Game.findOne({ id: price.title_id }, (error, game) => {
-          const priceIndex = game.prices.findIndex(
-            price => price.country === country
-          );
-          if (priceIndex !== -1) {
-            game.prices[priceIndex] = transformPriceData(price, country);
-          } else {
-            game.prices.push(transformPriceData(price, country));
-          }
-          game.save();
-        });
+        updateGamePrices(price, country);
+        storePrice(price, country);
       });
     })
     .catch(err => console.error(err));
-};
+}
 
-transformPriceData = (price, country) => {
+async function storePrice(price, country) {
+  await Price.findOneAndUpdate(
+    {
+      currency: price.regular_price.currency,
+      country,
+      game_id: price.title_id,
+      date: new Date().toLocaleDateString()
+    },
+    transformPriceData(price, country),
+    {
+      upsert: true,
+      new: true,
+      setDefaultsOnInsert: true,
+      useFindAndModify: false
+    }
+  );
+}
+
+async function updateGamePrices(price, country) {
+  await Game.findOne({ id: price.title_id }, (error, game) => {
+    const priceIndex = game.prices.findIndex(
+      price => price.country === country
+    );
+    if (priceIndex !== -1) {
+      game.prices[priceIndex] = transformPriceData(price, country);
+    } else {
+      game.prices.push(transformPriceData(price, country));
+    }
+    game.save();
+  });
+}
+
+function transformPriceData(price, country) {
   return {
+    game_id: price.title_id,
+    date: new Date().toLocaleDateString(),
     price:
       price.regular_price !== undefined ? price.regular_price.raw_value : "",
     currency:
@@ -56,6 +91,6 @@ transformPriceData = (price, country) => {
         ? price.discount_price.end_datetime
         : ""
   };
-};
+}
 
 module.exports = router;

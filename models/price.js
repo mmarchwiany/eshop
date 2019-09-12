@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const priceSchema = new mongoose.Schema({
+  game_id: String,
   date: String,
   price: String,
   currency: String,

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Game = require("../models/game");
+const Price = require("../models/price");
 
 const {
   getGamesAmerica,
@@ -14,6 +15,37 @@ router.get("/", async (req, res) => {
     const games = await Game.find().limit(10);
 
     res.json(games);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.get("/:id", getGame, async (req, res) => {
+  try {
+    res.json(res.game);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.get("/:id/prices", getGame, async (req, res) => {
+  try {
+    const prices = await Price.find({ game_id: req.params.id });
+
+    res.json(prices);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.get("/:id/prices/:country", getGame, async (req, res) => {
+  try {
+    const prices = await Price.find({
+      game_id: req.params.id,
+      country: req.params.country
+    });
+
+    res.json(prices);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -57,5 +89,17 @@ router.post("/import", async (req, res) => {
       res.status(500).json({ error: err.message });
     });
 });
+
+async function getGame(req, res, next) {
+  const game = await Game.findOne({ id: req.params.id });
+
+  if (!game) {
+    return res.status(404).json({ message: "Game not found" });
+  }
+
+  res.game = game;
+
+  next();
+}
 
 module.exports = router;
