@@ -1,41 +1,44 @@
 require("dotenv").config();
 
 const program = require("commander");
-const Game = require("../models/game");
 const mongoose = require("mongoose");
+const Game = require("../models/game");
+const Price = require("../models/price");
 
-const {
-  getGamesAmerica,
-  getGamesEurope,
-  getGamesJapan,
-  getPrices
-} = require("nintendo-switch-eshop");
+const { getPrices } = require("nintendo-switch-eshop");
 
-program.option("-m, --markets <markets>", "markets", ["PL,DE"]);
-program.option("-l, --limit <limit>", "limit", 10);
+program.option("-m, --markets <markets>", "markets", "PL");
+program.option("-p, --page <page>", "page", 1);
+program.option("--page-size <pageSize>", "page size", 50);
 program.option("-d, --debug", "debug");
 program.option("-s, --silent", "silent");
 
 program.parse(process.argv);
 
-mongoose.connect(process.env.DATABASE_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-const db = mongoose.connection;
+const offset = (program.page - 1) * program.pageSize;
 
-db.on("error", error => console.error(error));
+mongoose
+  .connect(process.env.DATABASE_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => {
+    const db = mongoose.connection;
+    db.on("error", error => console.error(error));
 
-Game.find()
-  .then((games, err) => {
-    for (i = 0; i < program.limit; i += 40) {
-      gamesChunk = games.slice(i, i + 40);
-      program.markets
-        .split(",")
-        .forEach(country => updatePrices(gamesChunk, country.toUpperCase()));
+    return Game.find()
+      .skip(offset)
+      .limit(parseInt(program.pageSize))
+      .exec();
+  })
+  .then(async (games, err) => {
+    const markets = program.markets.split(",");
+    for (let index = 0; index < markets.length; index++) {
+      const country = markets[index].toUpperCase();
+      await updatePrices(games, country);
     }
   })
-  .then(amount => {
+  .then(() => {
     if (!program.silent) {
       console.info("prices imported");
     }
@@ -47,12 +50,13 @@ Game.find()
   });
 
 function updatePrices(gamesChunk, country) {
-  getPrices(country, gamesChunk.map(o => o["id"]))
-    .then(data => {
-      data.prices.forEach(async price => {
+  return getPrices(country, gamesChunk.map(o => o["id"]))
+    .then(async data => {
+      for (let index = 0; index < data.prices.length; index++) {
+        const price = data.prices[index];
         try {
           await updateGamePrices(price, country);
-          await storePrice(price, country);
+          await savePrice(price, country);
           if (program.debug) {
             console.info(
               `- game ${price.title_id} [${country}] price successfully imported`
@@ -61,17 +65,17 @@ function updatePrices(gamesChunk, country) {
         } catch (err) {
           console.error(err);
         }
-      });
+      }
     })
     .catch(err => console.error(err));
 }
 
-function storePrice(price, country) {
+function savePrice(price, country) {
   return Price.findOneAndUpdate(
     {
       currency: price.regular_price.currency,
       country,
-      game_id: price.title_id,
+      game_id: "" + price.title_id,
       date: new Date().toLocaleDateString()
     },
     transformPriceData(price, country),
@@ -85,22 +89,23 @@ function storePrice(price, country) {
 }
 
 function updateGamePrices(price, country) {
-  return Game.findOne({ id: price.title_id }, (game, error) => {
+  Game.findOne({ id: price.title_id + "tes" }, (err, game) => {
     const priceIndex = game.prices.findIndex(
       price => price.country === country
     );
+
     if (priceIndex !== -1) {
       game.prices[priceIndex] = transformPriceData(price, country);
     } else {
       game.prices.push(transformPriceData(price, country));
     }
-    game.save();
+    return game.save();
   });
 }
 
 function transformPriceData(price, country) {
   return {
-    game_id: price.title_id,
+    game_id: "" + price.title_id,
     date: new Date().toLocaleDateString(),
     price:
       price.regular_price !== undefined ? price.regular_price.raw_value : "",
