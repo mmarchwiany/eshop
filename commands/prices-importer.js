@@ -35,7 +35,11 @@ mongoose
     const markets = program.markets.split(",");
     for (let index = 0; index < markets.length; index++) {
       const country = markets[index].toUpperCase();
-      await updatePrices(games, country);
+      try {
+        await updatePrices(games, country);
+      } catch (err) {
+        console.error(err);
+      }
     }
   })
   .then(() => {
@@ -89,18 +93,20 @@ function savePrice(price, country) {
 }
 
 function updateGamePrices(price, country) {
-  Game.findOne({ id: price.title_id + "tes" }, (err, game) => {
-    const priceIndex = game.prices.findIndex(
-      price => price.country === country
-    );
+  return Game.findOne({ id: price.title_id })
+    .exec()
+    .then((game, err) => {
+      const priceIndex = game.prices.findIndex(
+        price => price.country === country
+      );
 
-    if (priceIndex !== -1) {
-      game.prices[priceIndex] = transformPriceData(price, country);
-    } else {
-      game.prices.push(transformPriceData(price, country));
-    }
-    return game.save();
-  });
+      if (priceIndex !== -1) {
+        game.prices[priceIndex] = transformPriceData(price, country);
+      } else {
+        game.prices.push(transformPriceData(price, country));
+      }
+      return game.save();
+    });
 }
 
 function transformPriceData(price, country) {
