@@ -10,7 +10,7 @@ mongoose.connect(process.env.DATABASE_URL, {
 const db = mongoose.connection;
 
 db.on("error", error => console.error(error));
-db.on("open", () => console.log("Connected to database"));
+// db.on("open", () => console.log("Connected to database"));
 
 app.use(express.json());
 
@@ -20,5 +20,7 @@ app.use("/games", gamesRouter);
 app.use("/prices", pricesRouter);
 
 app.listen(3000, () => {
-  console.log("Server started");
+  // console.log("Server started");
 });
+
+module.exports = app;

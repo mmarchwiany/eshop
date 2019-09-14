@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "test": "node ./node_modules/mocha/bin/mocha --exit"
   },
   "author": "",
   "license": "ISC",
@@ -12,11 +13,14 @@
     "commander": "^3.0.1",
     "express": "^4.17.1",
     "mongodb": "^3.3.2",
-    "mongoose": "^5.7.0",
-    "nintendo-switch-eshop": "^2.2.2"
+    "mongoose": "^5.7.1",
+    "nintendo-switch-eshop": "^2.2.3"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "dotenv": "^8.1.0",
+    "mocha": "^6.2.0",
     "nodemon": "^1.19.2"
   }
 }

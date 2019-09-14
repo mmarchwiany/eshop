@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Game = require("../models/game");
 const Price = require("../models/price");
+const pagination = require("./middleware/pagination");
 
 router.get("/", pagination, async (req, res) => {
   try {
@@ -52,26 +53,6 @@ router.get("/:id/prices/:country", getGame, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-function pagination(req, res, next) {
-  const { page: page = 0, page_size = 10 } = req.query;
-  const skip = page * page_size;
-
-  if (page < 0) {
-    return res.status(401).json({ message: "Page has to be grater the 0" });
-  }
-  if (page_size < 0) {
-    return res
-      .status(401)
-      .json({ message: "Page size has to be grater the 0" });
-  }
-
-  res.page_size = parseInt(page_size);
-  res.page = parseInt(page);
-  res.skip = skip;
-
-  next();
-}
 
 async function getGame(req, res, next) {
   const game = await Game.findOne({ id: req.params.id });
