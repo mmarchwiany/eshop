@@ -3,7 +3,7 @@ const router = express.Router();
 const Game = require("../models/game");
 const Price = require("../models/price");
 
-router.get("/", async (req, res) => {
+router.get("/", pagination, async (req, res) => {
   try {
     let filters = {};
 
@@ -12,9 +12,11 @@ router.get("/", async (req, res) => {
         filters[key] = new RegExp(req.query.filters[key], "i");
       }
     }
-    const games = await Game.find(filters).limit(10);
+    const games = await Game.find(filters)
+      .skip(res.skip)
+      .limit(res.page_size);
 
-    res.json(games);
+    res.json({ games, meta: { page: res.page, page_size: res.page_size } });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -50,6 +52,26 @@ router.get("/:id/prices/:country", getGame, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
+function pagination(req, res, next) {
+  const { page: page = 0, page_size = 10 } = req.query;
+  const skip = page * page_size;
+
+  if (page < 0) {
+    return res.status(401).json({ message: "Page has to be grater the 0" });
+  }
+  if (page_size < 0) {
+    return res
+      .status(401)
+      .json({ message: "Page size has to be grater the 0" });
+  }
+
+  res.page_size = parseInt(page_size);
+  res.page = parseInt(page);
+  res.skip = skip;
+
+  next();
+}
 
 async function getGame(req, res, next) {
   const game = await Game.findOne({ id: req.params.id });

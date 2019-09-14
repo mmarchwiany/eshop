@@ -1,5 +1,7 @@
 GET http://localhost:3000/games
 ###
+GET http://localhost:3000/games?page=2&page_size=20
+###
 GET http://localhost:3000/games?filters[title]=Zelda
 ###
 GET http://localhost:3000/games?filters[title]=Super Mario Odyssey
