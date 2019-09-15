@@ -17,7 +17,14 @@ router.get("/", pagination, async (req, res) => {
       .skip(res.skip)
       .limit(res.page_size);
 
-    res.json({ games, meta: { page: res.page, page_size: res.page_size } });
+    const pages = Math.ceil(
+      (await Game.countDocuments(filters)) / res.page_size
+    );
+
+    res.json({
+      games,
+      meta: { page: res.page, page_size: res.page_size, pages }
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

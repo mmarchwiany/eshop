@@ -9,7 +9,12 @@ router.get("/", pagination, async (req, res) => {
       .skip(res.skip)
       .limit(res.page_size);
 
-    res.json({ prices, meta: { page: res.page, page_size: res.page_size } });
+    const pages = Math.ceil((await Price.countDocuments()) / res.page_size);
+
+    res.json({
+      prices,
+      meta: { page: res.page, page_size: res.page_size, pages }
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

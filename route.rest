@@ -15,7 +15,3 @@ GET http://localhost:3000/games/70010000003781/prices/PL
 GET http://localhost:3000/games/70010000003781/prices/DE
 ###
 GET http://localhost:3000/prices
-###
-POST http://localhost:3000/games/import
-###
-POST http://localhost:3000/prices/import
