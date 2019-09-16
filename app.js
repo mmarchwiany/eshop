@@ -34,33 +34,6 @@ app.get("/importGamesList", (req, res) => {
 
     db.close();
   });
-
-  //   getGamesEurope().then(data => {
-  //     for (let {
-  //       nsuid_txt: id,
-  //       title: title,
-  //       image_url: image,
-  //       game_categories_txt: category,
-  //       price_has_discount_b: is_discounted,
-  //       price_discount_percentage_f: discount
-  //     } of data) {
-  //       db.collection("games").insertOne(
-  //         {
-  //           id,
-  //           title,
-  //           image,
-  //           category,
-  //           is_discounted,
-  //           discount
-  //         },
-  //         function(err, res) {
-  //           if (err) throw err;
-  //           console.log("Document inserted");
-  //           db.close();
-  //         }
-  //       );
-  //     }
-  //   });
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
