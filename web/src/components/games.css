@@ -1,0 +1,26 @@
+.image {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 100%;
+}
+.image img {
+  position: absolute;
+}
+
+.card {
+  margin-bottom: 25px;
+}
+
+.card .card-title {
+  height: 40px;
+  display: block;
+}
+
+.card .card-text {
+  text-align: right;
+}
+
+.container {
+  width: 100%;
+  max-width: 100%;
+}

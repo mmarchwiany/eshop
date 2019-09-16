@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js",
+    "dev": "APP_DATABASE_URL=${APP_DATABASE_URL} nodemon server.js",
     "test": "node ./node_modules/mocha/bin/mocha --exit"
   },
   "author": "",

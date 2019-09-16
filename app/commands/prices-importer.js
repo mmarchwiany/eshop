@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 const program = require("commander");
 const mongoose = require("mongoose");
 const Game = require("../models/game");
@@ -18,7 +16,7 @@ program.parse(process.argv);
 const offset = (program.page - 1) * program.pageSize;
 
 mongoose
-  .connect(process.env.DATABASE_URL, {
+  .connect(process.env.APP_DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })

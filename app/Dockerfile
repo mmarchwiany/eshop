@@ -8,8 +8,6 @@ COPY package.json /usr/src/app/
 
 RUN npm install
 
-COPY . /usr/src/app
-
-EXPOSE 3000
+EXPOSE ${APP_PORT}
 
 CMD [ "npm", "run", "dev"]

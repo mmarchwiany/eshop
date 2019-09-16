@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 const program = require("commander");
 const Game = require("../models/game");
 const mongoose = require("mongoose");
@@ -21,7 +19,7 @@ program.option("-s, --silent", "silent");
 
 program.parse(process.argv);
 
-mongoose.connect(process.env.DATABASE_URL, {
+mongoose.connect(process.env.APP_DATABASE_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
