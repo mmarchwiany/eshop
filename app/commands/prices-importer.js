@@ -75,7 +75,8 @@ function updatePrices(gamesChunk, country) {
 function savePrice(price, country) {
   return Price.findOneAndUpdate(
     {
-      currency: price.regular_price.currency,
+      currency:
+        price.regular_price !== undefined ? price.regular_price.currency : "",
       country,
       game_id: "" + price.title_id,
       date: new Date().toLocaleDateString()
