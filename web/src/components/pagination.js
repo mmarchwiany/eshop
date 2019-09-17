@@ -4,9 +4,9 @@ const Pagination = ({ meta, fetchGames }) => {
   return (
     <nav aria-label="Page navigation example">
       <ul class="pagination pagination-lg  justify-content-center">
-        <li class="page-item">
+        <li className={"page-item" + (meta.page === 0 ? " disabled" : "")}>
           <a
-            class="page-link"
+            className={"page-link"}
             href="#"
             aria-label="Previous"
             onClick={e => fetchGames(meta.page - 1, meta.page_size)}
@@ -15,22 +15,49 @@ const Pagination = ({ meta, fetchGames }) => {
             <span class="sr-only">Previous</span>
           </a>
         </li>
-        {Array.from({ length: meta.pages }, (_, k) => {
+
+        {[meta.page, meta.page + 1, meta.page + 2].map(function(name, index) {
           return (
-            (k < 3 || k + 3 > meta.pages) && (
-              <li
-                class="page-item"
-                onClick={e => fetchGames(k, meta.page_size)}
-              >
-                <a class="page-link" href="#">
-                  {k + 1}
-                </a>
-              </li>
-            )
+            <li
+              class="page-item"
+              onClick={e => fetchGames(name, meta.page_size)}
+              key={index}
+            >
+              <a class="page-link" href="#">
+                {name + 1}
+              </a>
+            </li>
           );
         })}
 
-        <li class="page-item">
+        <li class="page-item disabled">
+          <a class="page-link" href="#">
+            ...
+          </a>
+        </li>
+
+        {[meta.pages - 2, meta.pages - 1, meta.pages].map(function(
+          name,
+          index
+        ) {
+          return (
+            <li
+              class="page-item"
+              onClick={e => fetchGames(name, meta.page_size)}
+              key={index}
+            >
+              <a class="page-link" href="#">
+                {name + 1}
+              </a>
+            </li>
+          );
+        })}
+
+        <li
+          className={
+            "page-item" + (meta.page === meta.pages ? " disabled" : "")
+          }
+        >
           <a
             class="page-link"
             href="#"

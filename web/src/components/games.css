@@ -24,3 +24,11 @@
   width: 100%;
   max-width: 100%;
 }
+
+.old{
+  text-decoration: line-through;
+}
+
+.discounted{
+  color: #FF0000;
+}

@@ -6,6 +6,7 @@ import Footer from "./components/footer";
 class App extends Component {
   state = {
     games: [],
+    search: "",
     meta: {
       page: 0,
       page_size: 48,
@@ -13,8 +14,10 @@ class App extends Component {
     }
   };
 
-  fetchGames = (page, page_size) => {
-    fetch(`http://localhost:3001/games?page=${page}&page_size=${page_size}`)
+  fetchGames = (page, page_size, search = "") => {
+    fetch(
+      `http://localhost:3001/games?page=${page}&page_size=${page_size}&filters[title]=${search}`
+    )
       .then(res => res.json())
       .then(data => {
         this.setState({ games: data.games, meta: data.meta });
@@ -29,7 +32,11 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Header></Header>
+        <Header
+          search={this.state.search}
+          meta={this.state.meta}
+          fetchGames={this.fetchGames}
+        ></Header>
         <Games
           games={this.state.games}
           meta={this.state.meta}

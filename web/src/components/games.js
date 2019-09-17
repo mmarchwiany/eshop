@@ -19,8 +19,28 @@ const Games = ({ games, meta, fetchGames }) => {
               <div class="card-body">
                 <h5 class="card-title">{game.title}</h5>
                 <p class="card-text">
-                  {game.prices[0] && game.prices[0].price}
-                  {game.prices[0] && game.prices[0].currency}
+                  <span
+                    className={
+                      game.prices[0] && game.prices[0].discount_price
+                        ? "old"
+                        : ""
+                    }
+                  >
+                    {game.prices[0] && game.prices[0].price}
+                    {game.prices[0] && game.prices[0].currency}
+                  </span>
+                  <span
+                    className={
+                      game.prices[0] && game.prices[0].discount_price
+                        ? "discounted"
+                        : ""
+                    }
+                  >
+                    {game.prices[0] && game.prices[0].discount_price}
+                    {game.prices[0] &&
+                      game.prices[0].discount_price &&
+                      game.prices[0].currency}
+                  </span>
                 </p>
                 <a href="#" class="btn btn-outline-primary btn-block">
                   Check price
