@@ -3,11 +3,10 @@ services:
   app:
     container_name: app
     restart: always
-    build:
-      context: app
-      dockerfile: Dockerfile
+    build: app    
     volumes:
       - ./app:/usr/src/app
+    working_dir: /usr/src/app
     ports:
       - "${APP_PORT}:${APP_PORT}"
     environment:
@@ -15,18 +14,19 @@ services:
       APP_PORT: ${APP_PORT}
     links:
       - mongo
+    command: '/bin/bash -c "npm i --save-dev && npm run dev"'
   web:
     container_name: web
     restart: always
-    build:
-      context: web
-      dockerfile: Dockerfile
+    build: web
+    working_dir: /usr/src/app
     volumes:
       - ./web:/usr/src/app
     ports:
       - "${WEB_PORT}:${WEB_PORT}"
     environment:
       WEB_PORT: ${WEB_PORT}
+    command: '/bin/bash -c "npm i --save-dev && npm start"'
   mongo:
     container_name: mongo
     image: mongo
