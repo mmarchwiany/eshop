@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Games from "./components/games";
 import Header from "./components/header";
 import Footer from "./components/footer";
+import "./App.scss";
 
 class App extends Component {
   state = {
@@ -9,7 +10,7 @@ class App extends Component {
     search: "",
     meta: {
       page: 0,
-      page_size: 48,
+      page_size: 96,
       pages: 0
     }
   };

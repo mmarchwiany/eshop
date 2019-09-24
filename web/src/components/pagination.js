@@ -3,7 +3,7 @@ import React from "react";
 const Pagination = ({ meta, fetchGames }) => {
   return (
     <nav aria-label="Page navigation example">
-      <ul class="pagination pagination-lg  justify-content-center">
+      <ul className="pagination pagination-lg  justify-content-center">
         <li className={"page-item" + (meta.page === 0 ? " disabled" : "")}>
           <a
             className={"page-link"}
@@ -12,26 +12,26 @@ const Pagination = ({ meta, fetchGames }) => {
             onClick={e => fetchGames(meta.page - 1, meta.page_size)}
           >
             <span aria-hidden="true">&laquo;</span>
-            <span class="sr-only">Previous</span>
+            <span className="sr-only">Previous</span>
           </a>
         </li>
 
         {[meta.page, meta.page + 1, meta.page + 2].map(function(name, index) {
           return (
             <li
-              class="page-item"
+              className="page-item"
               onClick={e => fetchGames(name, meta.page_size)}
               key={index}
             >
-              <a class="page-link" href="#">
+              <a className="page-link" href="#">
                 {name + 1}
               </a>
             </li>
           );
         })}
 
-        <li class="page-item disabled">
-          <a class="page-link" href="#">
+        <li className="page-item disabled">
+          <a className="page-link" href="#">
             ...
           </a>
         </li>
@@ -42,11 +42,11 @@ const Pagination = ({ meta, fetchGames }) => {
         ) {
           return (
             <li
-              class="page-item"
+              className="page-item"
               onClick={e => fetchGames(name, meta.page_size)}
               key={index}
             >
-              <a class="page-link" href="#">
+              <a className="page-link" href="#">
                 {name + 1}
               </a>
             </li>
@@ -59,13 +59,13 @@ const Pagination = ({ meta, fetchGames }) => {
           }
         >
           <a
-            class="page-link"
+            className="page-link"
             href="#"
             aria-label="Next"
             onClick={e => fetchGames(meta.page + 1, meta.page_size)}
           >
             <span aria-hidden="true">&raquo;</span>
-            <span class="sr-only">Next</span>
+            <span className="sr-only">Next</span>
           </a>
         </li>
       </ul>

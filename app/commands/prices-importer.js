@@ -42,7 +42,9 @@ mongoose
   })
   .then(() => {
     if (!program.silent) {
-      console.info("prices imported");
+      console.info(
+        `prices imported market=${program.markets} page=${program.page}`
+      );
     }
     mongoose.connection.close();
   })

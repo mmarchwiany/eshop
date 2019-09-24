@@ -25,12 +25,12 @@ class Header extends React.Component {
 
   render() {
     return (
-      <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-          🎮 Nintendo Swith Games
+      <nav className="navbar navbar-light bg-light">
+        <a className="navbar-brand" href="#">
+          <span>🎮</span> Nintendo Swith Games
         </a>
 
-        <form class="form-inline">
+        <form className="form-inline">
           <input
             className="form-control mr-sm-2"
             type="search"
@@ -40,7 +40,7 @@ class Header extends React.Component {
             onChange={this.commonChange}
           />
           <button
-            class="btn btn-outline-success my-2 my-sm-0"
+            className="btn btn-outline-success my-2 my-sm-0"
             type="submit"
             onClick={this.search}
           >

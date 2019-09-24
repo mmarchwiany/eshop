@@ -15,7 +15,8 @@
     "express": "^4.17.1",
     "mongodb": "^3.3.2",
     "mongoose": "^5.7.1",
-    "nintendo-switch-eshop": "^2.2.3"
+    "nintendo-switch-eshop": "^2.2.3",
+    "node-sass": "^4.12.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",

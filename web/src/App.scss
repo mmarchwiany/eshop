@@ -1,0 +1,62 @@
+.image {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 100%;
+
+  img {
+    position: absolute;
+  }
+}
+
+.card {
+  margin-bottom: 25px;
+
+  .card-body {
+    padding: 0;
+
+    .card-text,
+    .card-title {
+      font-size: 0.75rem;
+      padding: 0.25rem;
+      display: block;
+      margin: 0;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+
+      &.old {
+        text-decoration: line-through;
+      }
+
+      &.discounted {
+        color: #FF0000;
+      }
+    }
+  }
+
+  .card-title {
+    height: 40px;
+    display: block;
+  }
+
+  .card-text {
+    text-align: right;
+  }
+}
+
+.footers a {
+  color: #696969;
+}
+
+.footers p {
+  color: #696969;
+}
+
+.footers ul {
+  line-height: 30px;
+}
+
+.footers-logo {
+  font-size: 80px;
+}

@@ -1,50 +1,49 @@
 import React from "react";
-import "./footer.css";
 
 const Footer = () => {
   return (
     <div>
-      <section class="footers bg-light pt-5 pb-3">
-        <div class="container pt-5">
-          <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-4 footers-one">
-              <div class="footers-logo">🎮</div>
-              <div class="footers-info mt-6">
+      <section className="footers bg-light pt-5 pb-3">
+        <div className="container pt-5">
+          <div className="row">
+            <div className="col-xs-12 col-sm-6 col-md-4 footers-one">
+              <div className="footers-logo">🎮</div>
+              <div className="footers-info mt-6">
                 <p>
                   Cras sociis natoque penatibus et magnis Lorem Ipsum tells
                   about the compmany right now the best.
                 </p>
               </div>
-              <div class="social-icons">
+              <div className="social-icons">
                 <a href="https://www.facebook.com/">
                   <i
                     id="social-fb"
-                    class="fa fa-facebook-square fa-2x social"
+                    className="fa fa-facebook-square fa-2x social"
                   ></i>
                 </a>
                 <a href="https://twitter.com/">
                   <i
                     id="social-tw"
-                    class="fa fa-twitter-square fa-2x social"
+                    className="fa fa-twitter-square fa-2x social"
                   ></i>
                 </a>
                 <a href="https://plus.google.com/">
                   <i
                     id="social-gp"
-                    class="fa fa-google-plus-square fa-2x social"
+                    className="fa fa-google-plus-square fa-2x social"
                   ></i>
                 </a>
                 <a href="mailto:bootsnipp@gmail.com">
                   <i
                     id="social-em"
-                    class="fa fa-envelope-square fa-2x social"
+                    className="fa fa-envelope-square fa-2x social"
                   ></i>
                 </a>
               </div>
             </div>
-            <div class="col-xs-12 col-sm-6 col-md-2 footers-two">
+            <div className="col-xs-12 col-sm-6 col-md-2 footers-two">
               <h5>Essentials </h5>
-              <ul class="list-unstyled">
+              <ul className="list-unstyled">
                 <li>
                   <a href="maintenance.html">Search</a>
                 </li>
@@ -62,9 +61,9 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div class="col-xs-12 col-sm-6 col-md-2 footers-three">
+            <div className="col-xs-12 col-sm-6 col-md-2 footers-three">
               <h5>Information </h5>
-              <ul class="list-unstyled">
+              <ul className="list-unstyled">
                 <li>
                   <a href="maintenance.html">Register Now</a>
                 </li>
@@ -82,9 +81,9 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div class="col-xs-12 col-sm-6 col-md-2 footers-four">
+            <div className="col-xs-12 col-sm-6 col-md-2 footers-four">
               <h5>Explore </h5>
-              <ul class="list-unstyled">
+              <ul className="list-unstyled">
                 <li>
                   <a href="maintenance.html">News</a>
                 </li>
@@ -102,9 +101,9 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div class="col-xs-12 col-sm-6 col-md-2 footers-five">
+            <div className="col-xs-12 col-sm-6 col-md-2 footers-five">
               <h5>Company </h5>
-              <ul class="list-unstyled">
+              <ul className="list-unstyled">
                 <li>
                   <a href="maintenance.html">Career</a>
                 </li>
@@ -125,10 +124,10 @@ const Footer = () => {
           </div>
         </div>
       </section>
-      <section class="disclaimer bg-light border">
-        <div class="container">
-          <div class="row ">
-            <div class="col-md-12 py-2">
+      <section className="disclaimer bg-light border">
+        <div className="container">
+          <div className="row ">
+            <div className="col-md-12 py-2">
               <small>
                 Disclaimer: Element Limited is only an intermediary offering its
                 platform to facilitate the transactions between Seller and
@@ -150,11 +149,11 @@ const Footer = () => {
           </div>
         </div>
       </section>
-      <section class="copyright border">
-        <div class="container">
-          <div class="row text-center">
-            <div class="col-md-12 pt-3">
-              <p class="text-muted">© 2019 Marcin Marchwiany</p>
+      <section className="copyright border">
+        <div className="container">
+          <div className="row text-center">
+            <div className="col-md-12 pt-3">
+              <p className="text-muted">© 2019 Marcin Marchwiany</p>
             </div>
           </div>
         </div>
