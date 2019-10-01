@@ -56,6 +56,7 @@ mongoose
 function updatePrices(gamesChunk, country) {
   return getPrices(country, gamesChunk.map(o => o["id"]))
     .then(async data => {
+      console.info(`prices for market [${country}] successfully downloaded`);
       for (let index = 0; index < data.prices.length; index++) {
         const price = data.prices[index];
         try {
