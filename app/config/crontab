@@ -1,0 +1,1 @@
+0 4 * * * /usr/src/app/scripts/import-prices.sh
