@@ -76,15 +76,17 @@ function updatePrices(gamesChunk, country) {
 }
 
 function savePrice(price, country) {
+  const newPrice = transformPriceData(price, country);
   return Price.findOneAndUpdate(
     {
-      currency:
-        price.regular_price !== undefined ? price.regular_price.currency : "",
-      country,
-      game_id: "" + price.title_id,
-      date: new Date().toLocaleDateString()
+      currency: newPrice.currency,
+      country: newPrice.country,
+      price: newPrice.price,
+      discount_price: newPrice.discount_price,
+      game_id: newPrice.game_id,
+      date: { $lte: new Date().toLocaleDateString() }
     },
-    transformPriceData(price, country),
+    newPrice,
     {
       upsert: true,
       new: true,
