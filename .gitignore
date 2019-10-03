@@ -63,3 +63,4 @@ typings/
 .next
 
 /data
+/app/storage/logs
