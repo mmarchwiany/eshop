@@ -9,7 +9,11 @@ const Games = ({ games, meta, fetchGames }) => {
           <div key="{game.id}" className="col-2">
             <div className="card">
               <div className="image">
-                <img src={game.image} className="img-fluid" alt=""></img>
+                <img
+                  src={game.image_local || game.image}
+                  className="img-fluid"
+                  alt=""
+                ></img>
               </div>
               <div className="card-body">
                 <p className="card-title">{game.title}</p>

@@ -10,9 +10,16 @@ const gameSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    url: {
+      type: String,
+      required: true
+    },
     image: {
       type: String,
       required: true
+    },
+    image_local: {
+      type: String
     },
     categories: [
       {

@@ -12,6 +12,8 @@ services:
     environment:
       APP_DATABASE_URL: ${APP_DATABASE_URL}
       APP_PORT: ${APP_PORT}
+      S3_KEY: ${S3_KEY}
+      S3_SECRET: ${S3_SECRET}
     links:
       - mongo
     command: '/bin/bash -c "crontab /usr/src/app/config/crontab && npm install nodemon -g --save && npm i --save-dev && npm run dev"'
