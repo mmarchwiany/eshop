@@ -105,12 +105,25 @@ function updateGamePrices(price, country) {
       );
 
       if (priceIndex !== -1) {
-        game.prices[priceIndex] = transformPriceData(price, country);
+        const newPrice = transformPriceData(price, country);
+        const oldPrice = game.prices[priceIndex];
+        if (priceNeedsUpdate(oldPrice, newPrice)) {
+          game.prices[priceIndex] = newPrice;
+        }
       } else {
         game.prices.push(transformPriceData(price, country));
       }
       return game.save();
     });
+}
+
+function priceNeedsUpdate(oldPrice, newPrice) {
+  return (
+    oldPrice.price !== newPrice.price ||
+    oldPrice.discount_price !== newPrice.discount_price ||
+    oldPrice.discount_start_date !== newPrice.discount_start_date ||
+    oldPrice.discount_end_date !== newPrice.discount_end_date
+  );
 }
 
 function transformPriceData(price, country) {
