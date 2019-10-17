@@ -39,9 +39,6 @@ class Header extends React.Component {
         <form className="form-inline">
           <select
             className="form-control mr-sm-2"
-            type="order"
-            placeholder="order"
-            aria-label="order"
             name="order"
             onChange={this.commonChange}
           >
@@ -49,8 +46,8 @@ class Header extends React.Component {
             <option value="-title">Title [z-a]</option>
             <option value="price">Price [asc]</option>
             <option value="-price">Price [desc]</option>
-            <option value="updated_at">Modyfied [asc]</option>
-            <option value="-updated_at">Modyfied [desc]</option>
+            <option value="updated_at">Modified [asc]</option>
+            <option value="-updated_at">Modified [desc]</option>
           </select>
           <input
             className="form-control mr-sm-2"
