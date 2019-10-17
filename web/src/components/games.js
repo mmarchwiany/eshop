@@ -6,7 +6,7 @@ const Games = ({ games, meta, fetchGames }) => {
     <div className="container">
       <div className="row">
         {games.map((game, index) => (
-          <div key="{game.id}" className="col-2">
+          <div key="{game.id}" className="col-6 col-sm-4 col-md-3 col-lg-2">
             <div className="card">
               <div className="image">
                 <img
