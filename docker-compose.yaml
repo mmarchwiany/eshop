@@ -28,7 +28,7 @@ services:
       - "${WEB_PORT}:${WEB_PORT}"
     environment:
       WEB_PORT: ${WEB_PORT}
-    command: "/bin/bash -c 'npm i --save-dev && npm install serve -g --save && if [ $ENV = \"production\" ] ; then npm build && npm run prod; else npm run start; fi'"
+    command: "/bin/bash -c 'npm i --save-dev && npm install serve -g --save && if [ $ENV = \"production\" ] ; then npm run build && npm run prod; else npm run start; fi'"
   mongo:
     container_name: mongo
     image: mongo
