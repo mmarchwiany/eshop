@@ -8,6 +8,7 @@ class App extends Component {
   state = {
     games: [],
     search: "",
+    order: "",
     meta: {
       page: 0,
       page_size: 96,
@@ -15,9 +16,9 @@ class App extends Component {
     }
   };
 
-  fetchGames = (page, page_size, search = "") => {
+  fetchGames = (page, page_size, search = "", order = "") => {
     fetch(
-      `http://localhost:3001/games?page=${page}&page_size=${page_size}&filters[title]=${search}`
+      `http://localhost:3001/games?page=${page}&page_size=${page_size}&filters[title]=${search}&order=${order}`
     )
       .then(res => res.json())
       .then(data => {
@@ -36,6 +37,7 @@ class App extends Component {
         <Header
           search={this.state.search}
           meta={this.state.meta}
+          order={this.state.order}
           fetchGames={this.fetchGames}
         ></Header>
         <Games

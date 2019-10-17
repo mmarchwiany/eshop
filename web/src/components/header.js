@@ -5,6 +5,7 @@ class Header extends React.Component {
     super();
     this.state = {
       search: preps.search,
+      order: preps.order,
       meta: preps.meta
     };
     this.fetchGames = preps.fetchGames;
@@ -20,7 +21,12 @@ class Header extends React.Component {
 
   search(event) {
     event.preventDefault();
-    this.fetchGames(0, this.state.meta.page_size, this.state.search);
+    this.fetchGames(
+      0,
+      this.state.meta.page_size,
+      this.state.search,
+      this.state.order
+    );
   }
 
   render() {
@@ -31,6 +37,21 @@ class Header extends React.Component {
         </a>
 
         <form className="form-inline">
+          <select
+            className="form-control mr-sm-2"
+            type="order"
+            placeholder="order"
+            aria-label="order"
+            name="order"
+            onChange={this.commonChange}
+          >
+            <option value="title">Title [a-z]</option>
+            <option value="-title">Title [z-a]</option>
+            <option value="price">Price [asc]</option>
+            <option value="-price">Price [desc]</option>
+            <option value="updated_at">Modyfied [asc]</option>
+            <option value="-updated_at">Modyfied [desc]</option>
+          </select>
           <input
             className="form-control mr-sm-2"
             type="search"
