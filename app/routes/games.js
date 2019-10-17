@@ -3,22 +3,18 @@ const router = express.Router();
 const Game = require("../models/game");
 const Price = require("../models/price");
 const pagination = require("./middleware/pagination");
+const filters = require("./middleware/filters");
+const order = require("./middleware/order");
 
-router.get("/", pagination, async (req, res) => {
+router.get("/", [pagination, filters, order], async (req, res) => {
   try {
-    let filters = {};
-
-    if (req.query.filters) {
-      for (const key of Object.keys(req.query.filters)) {
-        filters[key] = new RegExp(req.query.filters[key], "i");
-      }
-    }
-    const games = await Game.find(filters)
+    const games = await Game.find(res.filters)
+      .sort(res.order)
       .skip(res.skip)
       .limit(res.page_size);
 
     const pages = Math.ceil(
-      (await Game.countDocuments(filters)) / res.page_size
+      (await Game.countDocuments(res.filters)) / res.page_size
     );
 
     res.json({

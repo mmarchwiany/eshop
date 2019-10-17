@@ -1,4 +1,4 @@
-module.exports = function(req, res, next) {
+module.exports = (req, res, next) => {
   const { page: page = 0, page_size = 10 } = req.query;
   const skip = page * page_size;
 
