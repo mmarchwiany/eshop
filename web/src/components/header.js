@@ -46,8 +46,8 @@ class Header extends React.Component {
             <option value="-title">Title [z-a]</option>
             <option value="price">Price [asc]</option>
             <option value="-price">Price [desc]</option>
-            <option value="updated_at">Modified [asc]</option>
-            <option value="-updated_at">Modified [desc]</option>
+            <option value="updatedAt">Modified [asc]</option>
+            <option value="-updatedAt">Modified [desc]</option>
           </select>
           <input
             className="form-control mr-sm-2"
