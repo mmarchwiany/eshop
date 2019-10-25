@@ -5,20 +5,23 @@ import Footer from "./components/footer";
 import "./App.scss";
 
 class App extends Component {
-  state = {
-    games: [],
-    search: "",
-    order: "",
-    meta: {
-      page: 0,
-      page_size: 96,
-      pages: 0
-    }
-  };
+  constructor(preps) {
+    super();
+    this.state = {
+      games: [],
+      search: "",
+      order: "",
+      meta: {
+        page: 0,
+        page_size: 96,
+        pages: 0
+      }
+    };
+  }
 
   fetchGames = (page, page_size, search = "", order = "") => {
     fetch(
-      `http://localhost:3001/games?page=${page}&page_size=${page_size}&filters[title]=${search}&order=${order}`
+      `${process.env.REACT_APP_URL}/games?page=${page}&page_size=${page_size}&filters[title]=${search}&order=${order}`
     )
       .then(res => res.json())
       .then(data => {

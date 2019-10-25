@@ -9,9 +9,9 @@
     "react-scripts": "3.1.1"
   },
   "scripts": {
-    "start": "PORT=${WEB_PORT} react-scripts start",
-    "prod": "serve -s build -p ${WEB_PORT}",
-    "build": "react-scripts build",
+    "start": "PORT=${WEB_PORT} REACT_APP_URL=${APP_URL} react-scripts start",
+    "prod": " serve -s build -p ${WEB_PORT}",
+    "build": "REACT_APP_URL=${APP_URL} react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -29,5 +29,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {}
 }
