@@ -1,8 +1,12 @@
+import { connect } from "react-redux";
+import { fetchGames } from "../actions/games";
 import React from "react";
 
-const Pagination = ({ meta, fetchGames }) => {
+const Pagination = ({ games }) => {
+  const meta = games.meta || [{ page: 0, page_size: 0, pages: 0 }];
+
   return (
-    <nav aria-label="Page navigation example">
+    <nav aria-label="Page navigation">
       <ul className="pagination pagination-lg  justify-content-center">
         <li className={"page-item" + (meta.page === 0 ? " disabled" : "")}>
           <a
@@ -73,4 +77,15 @@ const Pagination = ({ meta, fetchGames }) => {
   );
 };
 
-export default Pagination;
+const mapStateToProps = state => ({
+  games: state.games
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchGames: () => dispatch(fetchGames())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Pagination);

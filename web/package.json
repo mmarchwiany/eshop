@@ -6,7 +6,11 @@
     "node-sass": "^4.12.0",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
-    "react-scripts": "3.1.1"
+    "react-redux": "^7.1.1",
+    "react-scripts": "3.1.1",
+    "redux": "^4.0.4",
+    "redux-logger": "^3.0.6",
+    "redux-saga": "^1.1.1"
   },
   "scripts": {
     "start": "PORT=${WEB_PORT} REACT_APP_URL=${APP_URL} react-scripts start",
