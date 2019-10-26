@@ -1,11 +1,22 @@
-import { FETCH_GAMES } from "../constants/actionTypes";
+import {
+  FETCH_GAMES,
+  FETCH_GAMES_SUCCESS,
+  FETCH_GAMES_ERROR
+} from "../constants/actionTypes";
 
-const fetchGames = (page = 0, page_size = 50, search = "", order = "") => ({
-  type: FETCH_GAMES,
-  page,
-  page_size,
-  search,
-  order
+const doAddGames = response => ({
+  type: FETCH_GAMES_SUCCESS,
+  response
 });
 
-export { fetchGames };
+const doFetchGames = query => ({
+  type: FETCH_GAMES,
+  query
+});
+
+const doFetchErrorGames = error => ({
+  type: FETCH_GAMES_ERROR,
+  error
+});
+
+export { doAddGames, doFetchGames, doFetchErrorGames };

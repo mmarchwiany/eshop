@@ -1,15 +1,21 @@
 import { call, put } from "redux-saga/effects";
-import { doAddStories } from "../actions/story";
+import { doAddGames, doFetchErrorGames } from "../actions/games";
 
-const fetchGames = (page, page_size, search, order) => {
-  console.info("call");
-  fetch(
-    `${process.env.REACT_APP_URL}/games?page=${page}&page_size=${page_size}&filters[title]=${search}&order=${order}`
-  )
-    .then(res => res.json())
-    .catch(console.log);
+const fetchGames = ({ page = 0, page_size = 50, search = "", order = "" }) => {
+  console.log({ page, page_size, search, order });
+
+  return fetch(
+    `http://localhost:3001/games?page=${page}&page_size=${page_size}&filters[title]=${search}&order=${order}`
+  ).then(response => response.json());
 };
-function* handlefetchGames(action) {
-  yield put(doAddStories(yield call(fetchGames, ...action)));
+
+function* handleFetchGames(action) {
+  try {
+    let response = yield call(fetchGames, action.query);
+    yield put(doAddGames(response));
+  } catch (error) {
+    yield put(doFetchErrorGames(error));
+  }
 }
+
 export { handleFetchGames };

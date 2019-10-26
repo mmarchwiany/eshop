@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Games from "./components/games";
-// import Header from "./components/header";
+import Header from "./components/header";
 import Footer from "./components/footer";
 import "./App.scss";
 
@@ -16,11 +16,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        {/* <Header
-          search={this.state.search}
-          order={this.state.order}
-          fetchGames={this.fetchGames}
-        ></Header> */}
+        <Header />
         <Games />
         <Footer />
       </div>

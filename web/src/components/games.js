@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import Pagination from "./pagination";
 import React, { Component } from "react";
-import { fetchGames } from "../actions/games";
+import { doFetchGames } from "../actions/games";
 
 const Game = ({ game }) => {
   return (
@@ -47,37 +47,36 @@ const Game = ({ game }) => {
 };
 
 class Games extends Component {
-  constructor(preps) {
-    super();
-    this.state = {
-      games: preps.games
-    };
+  constructor(props) {
+    super(props);
   }
 
   componentDidMount() {
-    this.props.fetchGames();
+    this.props.doFetchGames({ page: 0, page_size: 50, search: "", order: "" });
   }
 
   render() {
     return (
       <div className="container">
+        <Pagination />
         <div className="row">
-          {(this.state.games.games || []).map((game, index) => (
+          {(this.props.games || []).map((game, index) => (
             <Game game={game} key={game.id} />
           ))}
         </div>
-        <Pagination games={this.state.games} />
+        <Pagination />
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  games: state.games
+  games: state.games.games,
+  meta: state.meta
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchGames: () => dispatch(fetchGames())
+  doFetchGames: query => dispatch(doFetchGames(query))
 });
 
 export default connect(

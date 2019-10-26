@@ -1,88 +1,110 @@
 import { connect } from "react-redux";
-import { fetchGames } from "../actions/games";
-import React from "react";
+import { doFetchGames } from "../actions/games";
+import React, { Component } from "react";
 
-const Pagination = ({ games }) => {
-  const meta = games.meta || [{ page: 0, page_size: 0, pages: 0 }];
+class Pagination extends Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
 
-  return (
-    <nav aria-label="Page navigation">
-      <ul className="pagination pagination-lg  justify-content-center">
-        <li className={"page-item" + (meta.page === 0 ? " disabled" : "")}>
-          <a
-            className={"page-link"}
-            href="#"
-            aria-label="Previous"
-            onClick={e => fetchGames(meta.page - 1, meta.page_size)}
+  handleClick(event, data) {
+    this.props.doFetchGames({ ...this.props.meta, ...data });
+  }
+
+  render() {
+    return (
+      <nav aria-label="Page navigation">
+        <ul className="pagination pagination-lg  justify-content-center">
+          <li
+            className={
+              "page-item" + (this.props.meta.page === 0 ? " disabled" : "")
+            }
           >
-            <span aria-hidden="true">&laquo;</span>
-            <span className="sr-only">Previous</span>
-          </a>
-        </li>
-
-        {[meta.page, meta.page + 1, meta.page + 2].map(function(name, index) {
-          return (
-            <li
-              className="page-item"
-              onClick={e => fetchGames(name, meta.page_size)}
-              key={index}
+            <a
+              className={"page-link"}
+              href="#"
+              aria-label="Previous"
+              onClick={e => this.handleClick(e, { page: 1 })}
             >
-              <a className="page-link" href="#">
-                {name + 1}
-              </a>
-            </li>
-          );
-        })}
+              <span aria-hidden="true">&laquo;</span>
+              <span className="sr-only">Previous</span>
+            </a>
+          </li>
 
-        <li className="page-item disabled">
-          <a className="page-link" href="#">
-            ...
-          </a>
-        </li>
+          {[
+            this.props.meta.page,
+            this.props.meta.page + 1,
+            this.props.meta.page + 2
+          ].map(function(name, index) {
+            return (
+              <li
+                className="page-item"
+                onClick={e => this.handleClick(e, { page: name })}
+                key={index}
+              >
+                <a className="page-link" href="#">
+                  {name + 1}
+                </a>
+              </li>
+            );
+          }, this)}
 
-        {[meta.pages - 2, meta.pages - 1, meta.pages].map(function(
-          name,
-          index
-        ) {
-          return (
-            <li
-              className="page-item"
-              onClick={e => fetchGames(name, meta.page_size)}
-              key={index}
-            >
-              <a className="page-link" href="#">
-                {name + 1}
-              </a>
-            </li>
-          );
-        })}
+          <li className="page-item disabled">
+            <a className="page-link" href="#">
+              ...
+            </a>
+          </li>
 
-        <li
-          className={
-            "page-item" + (meta.page === meta.pages ? " disabled" : "")
-          }
-        >
-          <a
-            className="page-link"
-            href="#"
-            aria-label="Next"
-            onClick={e => fetchGames(meta.page + 1, meta.page_size)}
+          {[
+            this.props.meta.pages - 2,
+            this.props.meta.pages - 1,
+            this.props.meta.pages
+          ].map(function(name, index) {
+            return (
+              <li
+                className="page-item"
+                onClick={e => this.handleClick(e, { page: name })}
+                key={index}
+              >
+                <a className="page-link" href="#">
+                  {name + 1}
+                </a>
+              </li>
+            );
+          })}
+
+          <li
+            className={
+              "page-item" +
+              (this.props.meta.page === this.props.meta.pages
+                ? " disabled"
+                : "")
+            }
           >
-            <span aria-hidden="true">&raquo;</span>
-            <span className="sr-only">Next</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-  );
-};
+            <a
+              className="page-link"
+              href="#"
+              aria-label="Next"
+              onClick={e => this.handleClick(e, { page: 1 })}
+            >
+              <span aria-hidden="true">&raquo;</span>
+              <span className="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    );
+  }
+}
 
 const mapStateToProps = state => ({
-  games: state.games
+  games: state.games.games,
+  meta: state.games.meta
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchGames: () => dispatch(fetchGames())
+  doFetchGames: query => dispatch(doFetchGames(query))
 });
 
 export default connect(
