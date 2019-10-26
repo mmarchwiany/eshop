@@ -1,16 +1,12 @@
+import { connect } from "react-redux";
 import React from "react";
+import { doFetchGames } from "../actions/games";
 
 class Header extends React.Component {
   constructor(preps) {
     super();
-    this.state = {
-      search: preps.search,
-      order: preps.order,
-      meta: preps.meta
-    };
-    this.fetchGames = preps.fetchGames;
     this.commonChange = this.commonChange.bind(this);
-    this.search = this.search.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   commonChange(event) {
@@ -19,14 +15,9 @@ class Header extends React.Component {
     });
   }
 
-  search(event) {
+  handleSearch(event, data) {
     event.preventDefault();
-    this.fetchGames(
-      0,
-      this.state.meta.page_size,
-      this.state.search,
-      this.state.order
-    );
+    this.props.doFetchGames({ ...this.props.meta, ...data });
   }
 
   render() {
@@ -60,7 +51,7 @@ class Header extends React.Component {
           <button
             className="btn btn-outline-success my-2 my-sm-0"
             type="submit"
-            onClick={this.search}
+            onClick={this.handleSearch}
           >
             Search
           </button>
@@ -70,4 +61,15 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+const mapStateToProps = state => ({
+  meta: state.games.meta
+});
+
+const mapDispatchToProps = dispatch => ({
+  doFetchGames: query => dispatch(doFetchGames(query))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);

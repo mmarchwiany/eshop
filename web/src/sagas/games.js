@@ -1,7 +1,7 @@
 import { call, put } from "redux-saga/effects";
 import { doAddGames, doFetchErrorGames } from "../actions/games";
 
-const fetchGames = ({ page = 0, page_size = 50, search = "", order = "" }) => {
+const fetchGames = ({ page = 0, page_size = 48, search = "", order = "" }) => {
   console.log({ page, page_size, search, order });
 
   return fetch(

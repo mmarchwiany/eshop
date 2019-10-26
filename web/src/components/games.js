@@ -52,13 +52,12 @@ class Games extends Component {
   }
 
   componentDidMount() {
-    this.props.doFetchGames({ page: 0, page_size: 50, search: "", order: "" });
+    this.props.doFetchGames({ page: 0, page_size: 48, search: "", order: "" });
   }
 
   render() {
     return (
       <div className="container">
-        <Pagination />
         <div className="row">
           {(this.props.games || []).map((game, index) => (
             <Game game={game} key={game.id} />

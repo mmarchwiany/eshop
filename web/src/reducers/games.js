@@ -9,12 +9,12 @@ const INITIAL_STATE = {
 function gamesReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_GAMES:
-      const { page, page_size } = action;
+      const { page, page_size, pages } = action;
       const { search, sort } = action;
       return {
-        ...state,
-        meta: { ...state.meta, page, page_size },
-        query: { ...state.query, search, sort }
+        games: [],
+        meta: { page, page_size, pages },
+        query: { search, sort }
       };
     case FETCH_GAMES_SUCCESS:
       const data = {

@@ -13,9 +13,17 @@ class Pagination extends Component {
   }
 
   render() {
+    if (this.props.meta.pages === undefined) {
+      return (
+        <nav aria-label="Page navigation">
+          <ul className="pagination pagination-lg justify-content-center"></ul>
+        </nav>
+      );
+    }
+
     return (
       <nav aria-label="Page navigation">
-        <ul className="pagination pagination-lg  justify-content-center">
+        <ul className="pagination pagination-lg justify-content-center">
           <li
             className={
               "page-item" + (this.props.meta.page === 0 ? " disabled" : "")
@@ -25,7 +33,7 @@ class Pagination extends Component {
               className={"page-link"}
               href="#"
               aria-label="Previous"
-              onClick={e => this.handleClick(e, { page: 1 })}
+              onClick={e => this.handleClick(e, { page: 0 })}
             >
               <span aria-hidden="true">&laquo;</span>
               <span className="sr-only">Previous</span>
@@ -86,7 +94,7 @@ class Pagination extends Component {
               className="page-link"
               href="#"
               aria-label="Next"
-              onClick={e => this.handleClick(e, { page: 1 })}
+              onClick={e => this.handleClick(e, { page: 0 })}
             >
               <span aria-hidden="true">&raquo;</span>
               <span className="sr-only">Next</span>
