@@ -11,7 +11,7 @@ class Header extends React.Component {
 
   handelSearch(event) {
     this.props.doFetchGames({
-      meta: this.props.meta,
+      meta: { ...this.props.meta, page: 0 },
       query: { ...this.props.query, search: event.target.value }
     });
   }
