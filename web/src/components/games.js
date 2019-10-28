@@ -52,7 +52,7 @@ class Games extends Component {
   }
 
   componentDidMount() {
-    this.props.doFetchGames({ page: 0, page_size: 48, search: "", order: "" });
+    this.props.doFetchGames({});
   }
 
   render() {

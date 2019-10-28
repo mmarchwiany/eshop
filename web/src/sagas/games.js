@@ -11,7 +11,10 @@ const fetchGames = ({ page = 0, page_size = 48, search = "", order = "" }) => {
 
 function* handleFetchGames(action) {
   try {
-    let response = yield call(fetchGames, action.query);
+    let response = yield call(fetchGames, {
+      ...action.query.meta,
+      ...action.query.query
+    });
     yield put(doAddGames(response));
   } catch (error) {
     yield put(doFetchErrorGames(error));

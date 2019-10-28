@@ -5,19 +5,23 @@ import { doFetchGames } from "../actions/games";
 class Header extends React.Component {
   constructor(preps) {
     super();
-    this.commonChange = this.commonChange.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
+    this.handelSearch = this.handelSearch.bind(this);
+    this.handelOrder = this.handelOrder.bind(this);
   }
 
-  commonChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
+  handelSearch(event) {
+    this.props.doFetchGames({
+      meta: this.props.meta,
+      query: { ...this.props.query, search: event.target.value }
     });
   }
 
-  handleSearch(event, data) {
-    event.preventDefault();
-    this.props.doFetchGames({ ...this.props.meta, ...data });
+  handelOrder(event) {
+    this.props.doFetchGames({
+      meta: this.props.meta,
+      query: this.props.query,
+      ...{ order: event.target.value }
+    });
   }
 
   render() {
@@ -31,7 +35,7 @@ class Header extends React.Component {
           <select
             className="form-control mr-sm-2"
             name="order"
-            onChange={this.commonChange}
+            onChange={this.handelOrder}
           >
             <option value="title">Title [a-z]</option>
             <option value="-title">Title [z-a]</option>
@@ -46,15 +50,8 @@ class Header extends React.Component {
             placeholder="Search"
             aria-label="Search"
             name="search"
-            onChange={this.commonChange}
+            onChange={this.handelSearch}
           />
-          <button
-            className="btn btn-outline-success my-2 my-sm-0"
-            type="submit"
-            onClick={this.handleSearch}
-          >
-            Search
-          </button>
         </form>
       </nav>
     );
@@ -62,7 +59,8 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  meta: state.games.meta
+  meta: state.games.meta,
+  query: state.games.query
 });
 
 const mapDispatchToProps = dispatch => ({

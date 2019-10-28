@@ -9,7 +9,10 @@ class Pagination extends Component {
   }
 
   handleClick(event, data) {
-    this.props.doFetchGames({ ...this.props.meta, ...data });
+    this.props.doFetchGames({
+      meta: { ...this.props.meta, ...data },
+      query: this.props.query
+    });
   }
 
   render() {
@@ -108,7 +111,8 @@ class Pagination extends Component {
 
 const mapStateToProps = state => ({
   games: state.games.games,
-  meta: state.games.meta
+  meta: state.games.meta,
+  query: state.games.query
 });
 
 const mapDispatchToProps = dispatch => ({
