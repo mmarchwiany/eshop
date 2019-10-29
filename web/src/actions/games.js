@@ -4,7 +4,7 @@ import {
   FETCH_GAMES_ERROR
 } from "../constants/actionTypes";
 
-const doAddGames = response => ({
+const doFetchGamesSuccess = response => ({
   type: FETCH_GAMES_SUCCESS,
   response
 });
@@ -14,9 +14,9 @@ const doFetchGames = query => ({
   query
 });
 
-const doFetchErrorGames = error => ({
+const doFetchGamesErrors = error => ({
   type: FETCH_GAMES_ERROR,
   error
 });
 
-export { doAddGames, doFetchGames, doFetchErrorGames };
+export { doFetchGamesSuccess, doFetchGames, doFetchGamesErrors };

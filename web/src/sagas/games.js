@@ -1,5 +1,5 @@
 import { call, put } from "redux-saga/effects";
-import { doAddGames, doFetchErrorGames } from "../actions/games";
+import { doFetchGamesSuccess, doFetchGamesError } from "../actions/games";
 
 const fetchGames = ({ page = 0, page_size = 48, search = "", order = "" }) => {
   console.log({ page, page_size, search, order });
@@ -15,9 +15,9 @@ function* handleFetchGames(action) {
       ...action.query.meta,
       ...action.query.query
     });
-    yield put(doAddGames(response));
+    yield put(doFetchGamesSuccess(response));
   } catch (error) {
-    yield put(doFetchErrorGames(error));
+    yield put(doFetchGamesError(error));
   }
 }
 
