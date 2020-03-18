@@ -14,9 +14,9 @@ const doFetchGames = query => ({
   query
 });
 
-const doFetchGamesErrors = error => ({
+const doFetchGamesError = error => ({
   type: FETCH_GAMES_ERROR,
   error
 });
 
-export { doFetchGamesSuccess, doFetchGames, doFetchGamesErrors };
+export { doFetchGamesSuccess, doFetchGames, doFetchGamesError };
